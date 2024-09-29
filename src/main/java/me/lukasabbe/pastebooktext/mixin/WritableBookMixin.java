@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 @Mixin(BookEditScreen.class)
@@ -77,9 +79,23 @@ public abstract class WritableBookMixin extends Screen {
     @Unique
     String[] getSubString(String clipboard, String currentPageContent, int startInt){
         for(int i = clipboard.length() - 1 ; i >=0; i--){
-            final String substring = clipboard.substring(0, i);
-            if(textRenderer.getWrappedLinesHeight(getTotalContent(currentPageContent, startInt, substring),114) > 127) continue;
-            return new String[]{substring, Integer.toString(i)};
+            StringBuilder substring = new StringBuilder(clipboard.substring(0, i));
+            if(textRenderer.getWrappedLinesHeight(getTotalContent(currentPageContent, startInt, substring.toString()),114) > 127) continue;
+            List<String> substrings = Arrays.stream(substring.toString().split(" ")).toList();
+            substring = new StringBuilder();
+            String popedElemnt = "";
+            for(int y = 0; y<substrings.size(); y++){
+                if(substrings.size()-1 > y) {
+                    substring.append(substrings.get(y));
+                    substring.append(" ");
+                }else{
+                    popedElemnt = substrings.get(y);
+                }
+            }
+            int popedSize = popedElemnt.length();
+            if(popedElemnt.split(" ").length > 0)
+                popedSize++;
+            return new String[]{substring.toString(), Integer.toString(i-popedSize)};
         }
         return new String[]{null, null};
     }
