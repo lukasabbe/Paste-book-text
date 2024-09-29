@@ -26,6 +26,8 @@ public abstract class WritableBookMixin extends Screen {
 
     @Shadow protected abstract String getClipboard();
 
+    @Shadow private int currentPage;
+
     @Inject(method = "keyPressedEditMode", at= @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SelectionManager;paste()V"), cancellable = true)
     public void pasteInjects(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir){
         pasteText();
@@ -52,19 +54,33 @@ public abstract class WritableBookMixin extends Screen {
                 break;
             }
 
-            for(int i = clipboard.length() - 1 ; i >=0; i--){
-                final String substring = clipboard.substring(0, i);
-                if(textRenderer.getWrappedLinesHeight(getTotalContent(currentPageContent, currentPageAccessors.selectionStartInt(), substring),114) > 127) continue;
-                currentPageSelectionManager.insert(substring);
-                clipboard = clipboard.substring(i);
-                openNextPage();
-                break;
-            }
+            String[] strings;
+            if(clipboard.length() > 1023){
+                strings = getSubString(clipboard.substring(0,1023), currentPageContent, currentPageAccessors.selectionStartInt());
 
+            }else{
+                strings = getSubString(clipboard, currentPageContent, currentPageAccessors.selectionStartInt());
+            }
+            clipboard = clipboard.substring(Integer.parseInt(strings[1]));
+            currentPageSelectionManager.insert(strings[0]);
+            if(currentPage < 99){
+                openNextPage();
+            }else{
+                clipboard = "";
+            }
         }
     }
     @Unique
     String getTotalContent(final String currentPageContent, final int selectionInt, final String clipboard){
         return (new StringBuilder(currentPageContent)).insert(selectionInt, clipboard).toString();
+    }
+    @Unique
+    String[] getSubString(String clipboard, String currentPageContent, int startInt){
+        for(int i = clipboard.length() - 1 ; i >=0; i--){
+            final String substring = clipboard.substring(0, i);
+            if(textRenderer.getWrappedLinesHeight(getTotalContent(currentPageContent, startInt, substring),114) > 127) continue;
+            return new String[]{substring, Integer.toString(i)};
+        }
+        return new String[]{null, null};
     }
 }
