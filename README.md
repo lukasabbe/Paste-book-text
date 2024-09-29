@@ -1,5 +1,9 @@
-# Paste book text
+**Are you tired of painstakingly cutting up your texts in order for them to fit in Minecraft books? Look no further!**
+# Seamless paste ability
 
-With this mod you can paste larger texts in to books.
+Pressing `Ctrl + V` is no longer limited to one page! Simply copy your text, paste it and watch as the mod does the rest!
 
-Larger texts can take more time to load in. 
+## Features
+
+- Paste across pages
+- Does not split words in half, new pages will only be added between words!
