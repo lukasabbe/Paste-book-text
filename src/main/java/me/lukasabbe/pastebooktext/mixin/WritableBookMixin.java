@@ -93,8 +93,8 @@ public abstract class WritableBookMixin extends Screen {
                 }
             }
             int popedSize = popedElemnt.length();
-            if(popedElemnt.split(" ").length > 0)
-                popedSize++;
+            if(popedElemnt.split(" ").length == 0)
+                popedSize--;
             return new String[]{substring.toString(), Integer.toString(i-popedSize)};
         }
         return new String[]{null, null};
