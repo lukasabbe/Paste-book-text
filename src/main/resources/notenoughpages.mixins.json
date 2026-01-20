@@ -8,7 +8,6 @@
   ],
   "client": [
     "BookEditScreenAccessor",
-    "BookEditScreenMixin",
     "MultiLineEditBoxAccessor",
     "MultilineTextFieldMixin"
   ],

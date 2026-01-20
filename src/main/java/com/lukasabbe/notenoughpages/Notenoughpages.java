@@ -27,7 +27,6 @@ public class Notenoughpages implements ModInitializer {
             if(IsContentCorrectLength(content, textField)) return;
 
             while(true){
-                System.out.println(((BookEditScreenAccessor) bookEditScreen).getPagesAmount());
                 if(((BookEditScreenAccessor) bookEditScreen).getPagesAmount() == 99){
                     return;
                 }
