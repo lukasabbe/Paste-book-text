@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.lukasabbe.notenoughpages.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PasteContentMixin"
+  ],
+  "client": [
+    "BookEditScreenAccessor",
+    "BookEditScreenMixin",
+    "MultiLineEditBoxAccessor",
+    "MultilineTextFieldMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
