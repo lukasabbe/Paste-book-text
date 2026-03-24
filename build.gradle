@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.15-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
 }
@@ -23,8 +23,7 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 }
 
@@ -75,7 +74,7 @@ modrinth {
     projectId = "zitKUUW9" // https://modrinth.com/mod/not-enough-pages
     version = project.mod_version
     versionType = project.versionType
-    uploadFile = remapJar
+    uploadFile = jar
     gameVersions = [project.minecraft_version]
     loaders = ["fabric"]
 }
