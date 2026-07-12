@@ -16,7 +16,7 @@ public class Notenoughpages implements ModInitializer {
     public void onInitialize() {}
 
     public static void handlePaste(String content){
-        Screen guiScreen = Minecraft.getInstance().screen;
+        Screen guiScreen = Minecraft.getInstance().gui.screen();
         if(guiScreen == null) return;
         if(guiScreen instanceof BookEditScreen bookEditScreen){
             MultiLineEditBox page = ((BookEditScreenAccessor) bookEditScreen).getPage();
@@ -78,7 +78,7 @@ public class Notenoughpages implements ModInitializer {
         int cursor = field.cursor();
         int beginIndex = Math.min(selectCursor, cursor);
         int endIndex  = Math.max(selectCursor, cursor);
-        String bookContent = (new StringBuilder(((MultilineTextFieldMixin)field).getValue())).replace(beginIndex, endIndex, truncated).toString();
+        String bookContent = new StringBuilder(field.value()).replace(beginIndex, endIndex, truncated).toString();
 
         return !((MultilineTextFieldMixin) field).overflowsLineLimitInvoker(bookContent);
     }

@@ -13,9 +13,6 @@ public interface MultilineTextFieldMixin {
     @Invoker("overflowsLineLimit")
     boolean overflowsLineLimitInvoker(String string);
 
-    @Accessor("value")
-    String getValue();
-
     @Accessor("selectCursor")
     int getSelectCursor();
 
